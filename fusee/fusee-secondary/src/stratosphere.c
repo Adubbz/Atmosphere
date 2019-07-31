@@ -304,7 +304,7 @@ ini1_header_t *stratosphere_get_sd_files_ini1(void) {
 }
 
 /* Merges some number of INI1s into a single INI1. It's assumed that the INIs are in order of preference. */
-ini1_header_t *stratosphere_merge_inis(ini1_header_t **inis, size_t num_inis, void *emummc, size_t emummc_size) {
+ini1_header_t *stratosphere_merge_inis(ini1_header_t **inis, size_t num_inis, void *emummc, size_t emummc_size, void* ncm_inject, size_t ncm_inject_size) {
     uint32_t total_num_processes = 0;
 
     /* Validate all ini headers. */
@@ -367,6 +367,10 @@ ini1_header_t *stratosphere_merge_inis(ini1_header_t **inis, size_t num_inis, vo
             
             if (current_kip->title_id == FS_TITLE_ID && emummc != NULL) {
                 patched_kip = inject_emummc_kip(patched_kip != NULL ? patched_kip : current_kip, (kip1_header_t *)emummc);
+            }
+
+            if (current_kip->title_id == NCM_TITLE_ID && ncm_inject != NULL) {
+                patched_kip = inject_emummc_kip(patched_kip != NULL ? patched_kip : current_kip, (kip1_header_t *)ncm_inject);
             }
             
             if (patched_kip != NULL) {

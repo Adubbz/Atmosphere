@@ -20,7 +20,7 @@
 /* This is a library for patching Package2 prior to handoff to Exosphere. */
 
 #define MAGIC_PK21 (0x31324B50)
-#define PACKAGE2_SIZE_MAX 0x7FC000
+#define PACKAGE2_SIZE_MAX 0x8FC000
 
 #define PACKAGE2_SECTION_KERNEL 0x0
 #define PACKAGE2_SECTION_INI1   0x1
@@ -88,6 +88,6 @@ static inline uint8_t package2_meta_get_header_version(const package2_meta_t *me
     return (uint8_t)((metadata->ctr_dwords[1] ^ (metadata->ctr_dwords[1] >> 16) ^ (metadata->ctr_dwords[1] >> 24)) & 0xFF);
 }
 
-void package2_rebuild_and_copy(package2_header_t *package2, uint32_t target_firmware, void *emummc, size_t emummc_size);
+void package2_rebuild_and_copy(package2_header_t *package2, uint32_t target_firmware, void *emummc, size_t emummc_size, void* ncm_inject, size_t ncm_inject_size);
 
 #endif

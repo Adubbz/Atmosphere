@@ -32,7 +32,7 @@ void stratosphere_free_ini1(void);
 
 emummc_fs_ver_t stratosphere_get_fs_version(void);
 
-ini1_header_t *stratosphere_merge_inis(ini1_header_t **inis, unsigned int num_inis, void *emummc, size_t emummc_size);
+ini1_header_t *stratosphere_merge_inis(ini1_header_t **inis, unsigned int num_inis, void *emummc, size_t emummc_size, void* ncm_inject, size_t ncm_inject_size);
 
 typedef struct {
     bool has_nogc_config;

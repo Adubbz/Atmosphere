@@ -480,6 +480,8 @@ uint32_t nxboot_main(void) {
     size_t package1loader_size;
     void *emummc;
     size_t emummc_size;
+    void* ncm_inject = NULL;
+    size_t ncm_inject_size;
     uint32_t available_revision;
     FILE *boot0, *pk2file;
     void *exosphere_memaddr;
@@ -514,6 +516,19 @@ uint32_t nxboot_main(void) {
             }
 
             memcpy(emummc, emummc_kip, emummc_size);
+        }
+    }
+
+    ncm_inject_size = get_file_size("atmosphere/ncm_inject.kip");
+    if (ncm_inject_size != 0) {
+        /* Allocate memory for the TSEC firmware. */
+        ncm_inject = memalign(0x100, ncm_inject_size);
+
+        if (ncm_inject == NULL) {
+            fatal_error("[NXBOOT] Out of memory!\n");
+        }
+        if (read_from_file(ncm_inject, ncm_inject_size, "atmosphere/ncm_inject.kip") != ncm_inject_size) {
+            fatal_error("[NXBOOT] Could not read the ncm_inject kip!\n");
         }
     }
 
@@ -745,7 +760,7 @@ uint32_t nxboot_main(void) {
     print(SCREEN_LOG_LEVEL_INFO, u8"[NXBOOT] Configured Stratosphere...\n");
 
     /* Patch package2, adding Thermosphère + custom KIPs. */
-    package2_rebuild_and_copy(package2, MAILBOX_EXOSPHERE_CONFIGURATION->target_firmware, emummc, emummc_size);
+    package2_rebuild_and_copy(package2, MAILBOX_EXOSPHERE_CONFIGURATION->target_firmware, emummc, emummc_size, ncm_inject, ncm_inject_size);
 
     /* Set detected FS version. */
     MAILBOX_EXOSPHERE_CONFIGURATION->emummc_cfg.base_cfg.fs_version = stratosphere_get_fs_version();
