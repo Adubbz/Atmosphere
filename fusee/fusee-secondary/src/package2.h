@@ -20,7 +20,7 @@
 /* This is a library for patching Package2 prior to handoff to Exosphere. */
 
 #define MAGIC_PK21 (0x31324B50)
-#define PACKAGE2_SIZE_MAX 0x8FC000
+#define PACKAGE2_SIZE_MAX 0x7FC000
 
 #define PACKAGE2_SECTION_KERNEL 0x0
 #define PACKAGE2_SECTION_INI1   0x1
