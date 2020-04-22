@@ -44,4 +44,21 @@ namespace ams::settings {
         R_DEFINE_ERROR_RESULT(SettingsItemKeyInvalidFormat,     262);
         R_DEFINE_ERROR_RESULT(SettingsItemValueInvalidFormat,   263);
 
+        /* TODO: Range */
+            R_DEFINE_ERROR_RESULT(NullAmiiboKeyBuffer,                 1271);
+            R_DEFINE_ERROR_RESULT(NullAmiiboEcqvCertificateBuffer,     1272);
+            R_DEFINE_ERROR_RESULT(NullAmiiboEcdsaCertificateBuffer,    1273);
+            R_DEFINE_ERROR_RESULT(NullAmiiboEcqvBlsKeyBuffer,          1274);
+            R_DEFINE_ERROR_RESULT(NullAmiiboEcqvBlsCertificate,        1275);
+            R_DEFINE_ERROR_RESULT(NullAmiiboEcqvBlsRootCertificate,    1276);
+
+    namespace factory {
+
+        R_DEFINE_ERROR_RANGE(CalibrationDataError, 580, 599);
+            R_DEFINE_ERROR_RESULT(CalibrationDataFileSystemCorrupted, 581);
+            R_DEFINE_ERROR_RESULT(CalibrationDataCrcError,            582);
+            R_DEFINE_ERROR_RESULT(CalibrationDataShaError,            583);
+
+    }
+
 }

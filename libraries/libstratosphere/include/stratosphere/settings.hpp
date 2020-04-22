@@ -19,6 +19,7 @@
 #include <stratosphere/settings/settings_types.hpp>
 #include <stratosphere/settings/settings_fwdbg_types.hpp>
 #include <stratosphere/settings/settings_fwdbg_api.hpp>
+#include <stratosphere/settings/factory/settings_amiibo.hpp>
 #include <stratosphere/settings/factory/settings_serial_number.hpp>
 #include <stratosphere/settings/factory/settings_device_certificate.hpp>
 #include <stratosphere/settings/system/settings_error_report.hpp>
