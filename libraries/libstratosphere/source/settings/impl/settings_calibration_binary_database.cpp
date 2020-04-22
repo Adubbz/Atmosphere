@@ -73,7 +73,7 @@ namespace ams::settings::impl {
             auto &block = info->body.ecqv_ecdsa_amiibo_key_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data) - (info->header.version < EncryptedKeyFormatVersion ? EncryptionKeyGenerationSize : 0));
             std::memcpy(out->key, block.data, out->size); // fuck std::copy
             return ResultSuccess();
@@ -92,7 +92,7 @@ namespace ams::settings::impl {
             auto &block = info->body.amiibo_ecqv_certificate_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
             std::memcpy(out->cert, block.data, out->size); // fuck std::copy
             return ResultSuccess();
@@ -111,7 +111,7 @@ namespace ams::settings::impl {
             auto &block = info->body.amiibo_ecdsa_certificate_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
             std::memcpy(out->cert, block.data, out->size); // fuck std::copy
             return ResultSuccess();
@@ -130,7 +130,7 @@ namespace ams::settings::impl {
             auto &block = info->body.amiibo_ecqv_bls_key_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data) - (info->header.version < EncryptedKeyFormatVersion ? EncryptionKeyGenerationSize : 0));
             std::memcpy(out->key, block.data, out->size); // fuck std::copy
             return ResultSuccess();
@@ -149,7 +149,7 @@ namespace ams::settings::impl {
             auto &block = info->body.amiibo_ecqv_bls_certificate_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
             std::memcpy(out->cert, block.data, out->size); // fuck std::copy
             return ResultSuccess();
@@ -168,9 +168,117 @@ namespace ams::settings::impl {
             auto &block = info->body.amiibo_ecqv_bls_root_certificate_block;
             R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
             
-            /* Output the block. */
+            /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
             std::memcpy(out->cert, block.data, out->size); // fuck std::copy
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickModuleTypeL(u8 *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_module_type_l_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.module_type;
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickModelParameterL(settings::factory::AnalogStickModelParameter *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_model_parameter_l_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.model_parameter;
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickFactoryCalibrationL(settings::factory::AnalogStickFactoryCalibration *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_factory_calibration_l_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.calibration;
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickModuleTypeR(u8 *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_module_type_r_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.module_type;
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_model_parameter_r_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.model_parameter;
+            return ResultSuccess();
+        }
+
+        Result GetCalibInfoAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out) {
+            /* Ensure output isn't null. */
+            AMS_ASSERT(out != nullptr);
+
+            /* Get the calibration info. */
+            CalibrationInfo *info = nullptr;
+            R_TRY(GetCalibrationInfo(std::addressof(info)));
+            AMS_ASSERT(info != nullptr);
+
+            /* Validate the block. */
+            auto &block = info->body.analog_stick_factory_calibration_r_block;
+            R_UNLESS(CRC_BLOCK_VALID(block), settings::factory::ResultCalibrationDataCrcError());
+            
+            /* Output the data. */
+            *out = block.calibration;
             return ResultSuccess();
         }
 
@@ -197,13 +305,43 @@ namespace ams::settings::impl {
     }
 
     Result GetCalibBinAmiiboEcqvBlsCertificate(settings::factory::AmiiboEcqvBlsCertificate *out) {
-        R_UNLESS(out != nullptr, settings::ResultNullAmiiboEcqvBlsCertificate());
+        R_UNLESS(out != nullptr, settings::ResultNullAmiiboEcqvBlsCertificateBuffer());
         return ConvertFileSystemResult(GetCalibInfoAmiiboEcqvBlsCertificate(out));
     }
 
     Result GetCalibBinAmiiboEcqvBlsRootCertificate(settings::factory::AmiiboEcqvBlsRootCertificate *out) {
-        R_UNLESS(out != nullptr, settings::ResultNullAmiiboEcqvBlsRootCertificate());
+        R_UNLESS(out != nullptr, settings::ResultNullAmiiboEcqvBlsRootCertificateBuffer());
         return ConvertFileSystemResult(GetCalibInfoAmiiboEcqvBlsRootCertificate(out));
+    }
+
+    Result GetCalibBinAnalogStickModuleTypeL(u8 *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickModuleTypeBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickModuleTypeL(out));
+    }
+
+    Result GetCalibBinAnalogStickModelParameterL(settings::factory::AnalogStickModelParameter *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickModelParameterBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickModelParameterL(out));
+    }
+
+    Result GetCalibBinAnalogStickFactoryCalibrationL(settings::factory::AnalogStickFactoryCalibration *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickFactoryCalibrationBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickFactoryCalibrationL(out));
+    }
+
+    Result GetCalibBinAnalogStickModuleTypeR(u8 *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickModuleTypeBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickModuleTypeR(out));
+    }
+
+    Result GetCalibBinAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickModelParameterBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickModelParameterR(out));
+    }
+
+    Result GetCalibBinAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out) {
+        R_UNLESS(out != nullptr, settings::ResultNullAnalogStickFactoryCalibrationBuffer());
+        return ConvertFileSystemResult(GetCalibInfoAnalogStickFactoryCalibrationR(out));
     }
 
 }

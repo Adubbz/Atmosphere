@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -18,6 +18,11 @@
 
 namespace ams::settings::impl {
 
-    u16 GetCrc16(const void *data, size_t size);
+    Result GetAnalogStickModuleTypeL(u8 *out);
+    Result GetAnalogStickModelParameterL(settings::factory::AnalogStickModelParameter *out);
+    Result GetAnalogStickFactoryCalibrationL(settings::factory::AnalogStickFactoryCalibration *out);
+    Result GetAnalogStickModuleTypeR(u8 *out);
+    Result GetAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out);
+    Result GetAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out);
 
 }

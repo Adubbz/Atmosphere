@@ -14,58 +14,58 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "impl/settings_amiibo_impl.hpp"
+#include "impl/settings_analog_stick_impl.hpp"
 
 namespace ams::settings::factory {
 
-    Result GetAmiiboKey(AmiiboKey *out) {
+    Result GetAnalogStickModuleTypeL(u8 *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboKey(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickModuleTypeL(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
         return ResultSuccess();
     }
 
-    Result GetAmiiboEcqvCertificate(AmiiboEcqvCertificate *out) {
+    Result GetAnalogStickModelParameterL(AnalogStickModelParameter *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboEcqvCertificate(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickModelParameterL(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
         return ResultSuccess();
     }
 
-    Result GetAmiiboEcdsaCertificate(AmiiboEcdsaCertificate *out) {
+    Result GetAnalogStickFactoryCalibrationL(AnalogStickFactoryCalibration *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboEcdsaCertificate(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickFactoryCalibrationL(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
         return ResultSuccess();
     }
 
-    Result GetAmiiboEcqvBlsKey(AmiiboEcqvBlsKey *out) {
+    Result GetAnalogStickModuleTypeR(u8 *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboEcqvBlsKey(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickModuleTypeR(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
         return ResultSuccess();
     }
 
-    Result GetAmiiboEcqvBlsCertificate(AmiiboEcqvBlsCertificate *out) {
+    Result GetAnalogStickModelParameterR(AnalogStickModelParameter *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboEcqvBlsCertificate(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickModelParameterR(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
         return ResultSuccess();
     }
 
-    Result GetAmiiboEcqvBlsRootCertificate(AmiiboEcqvBlsRootCertificate *out) {
+    Result GetAnalogStickFactoryCalibrationR(AnalogStickFactoryCalibration *out) {
         /* Non calibration data errors represent fundamental system failure. */
-        R_TRY_CATCH(settings::impl::GetAmiiboEcqvBlsRootCertificate(out)) {
+        R_TRY_CATCH(settings::impl::GetAnalogStickFactoryCalibrationR(out)) {
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
             R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
         } R_END_TRY_CATCH_WITH_ABORT_UNLESS;

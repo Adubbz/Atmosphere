@@ -32,13 +32,14 @@ namespace ams::settings::impl {
     };                                                                      \
     static_assert(sizeof(_BlockTypeName) == _BlockSize);        
     
-    #define DEFINE_CALIBRATION_SHA_BLOCK(_BlockTypeName, _Size, _TypeName, _MemberName) \
-    struct _BlockTypeName {                                                             \
-        _TypeName _MemberName;                                                          \
-        static_assert(Size == sizeof(_TypeName) + sizeof(Sha256Hash));                  \
-        Sha256Hash sha256_hash;                                                         \
-    };                                                                                  \
-    static_assert(sizeof(_BlockTypeName) == _Size);
+    #define DEFINE_CALIBRATION_SHA_BLOCK(_BlockTypeName, _BlockSize, _Decl) \
+    struct _BlockTypeName {                                                       \
+        using TypeSizeStruct = struct { _Decl; };                                 \
+        _Decl;                                                                    \
+        static_assert(_BlockSize == sizeof(TypeSizeStruct) + sizeof(Sha256Hash)); \
+        Sha256Hash sha256_hash;                                                   \
+    };                                                                            \
+    static_assert(sizeof(_BlockTypeName) == _BlockSize);
 
     // ConfigurationId1Block configuration_id_1_block;
     // WirelessLanCountryCodesBlock wireless_lan_country_codes_block;
@@ -92,12 +93,12 @@ namespace ams::settings::impl {
     // HomeMenuSchemeMainColor1Block home_menu_scheme_main_color_1_block;
     // HomeMenuSchemeMainColor2Block home_menu_scheme_main_color_2_block;
     // HomeMenuSchemeMainColor3Block home_menu_scheme_main_color_3_block;
-    // AnalogStickModuleTypeLBlock analog_stick_module_type_l_block;
-    // AnalogStickModelParameterLBlock analog_stick_model_parameter_l_block;
-    // AnalogStickFactoryCalibrationLBlock analog_stick_factory_calibration_l_block;
-    // AnalogStickModuleTypeRBlock analog_stick_module_type_r_block;
-    // AnalogStickModelParameterRBlock analog_stick_model_parameter_r_block;
-    // AnalogStickFactoryCalibrationRBlock analog_stick_factory_calibration_r_block;
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickModuleTypeLBlock,         0x10, u8 module_type)
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickModelParameterLBlock,     0x20, settings::factory::AnalogStickModelParameter     model_parameter)
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickFactoryCalibrationLBlock, 0x10, settings::factory::AnalogStickFactoryCalibration calibration)
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickModuleTypeRBlock,         0x10, u8 module_type)
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickModelParameterRBlock,     0x20, settings::factory::AnalogStickModelParameter     model_parameter)
+    DEFINE_CALIBRATION_CRC_BLOCK(AnalogStickFactoryCalibrationRBlock, 0x10, settings::factory::AnalogStickFactoryCalibration calibration)
     // ConsoleSixAxisSensorModuleTypeBlock console_six_axis_sensor_module_type_block;
     // ConsoleSixAxisSensorHorizontalOffsetBlock console_six_axis_sensor_horizontal_offset_block;
     // BatteryVersionBlock battery_version_block;
@@ -180,12 +181,12 @@ namespace ams::settings::impl {
         // HomeMenuSchemeMainColor1Block home_menu_scheme_main_color_1_block;
         // HomeMenuSchemeMainColor2Block home_menu_scheme_main_color_2_block;
         // HomeMenuSchemeMainColor3Block home_menu_scheme_main_color_3_block;
-        // AnalogStickModuleTypeLBlock analog_stick_module_type_l_block;
-        // AnalogStickModelParameterLBlock analog_stick_model_parameter_l_block;
-        // AnalogStickFactoryCalibrationLBlock analog_stick_factory_calibration_l_block;
-        // AnalogStickModuleTypeRBlock analog_stick_module_type_r_block;
-        // AnalogStickModelParameterRBlock analog_stick_model_parameter_r_block;
-        // AnalogStickFactoryCalibrationRBlock analog_stick_factory_calibration_r_block;
+        AnalogStickModuleTypeLBlock analog_stick_module_type_l_block;
+        AnalogStickModelParameterLBlock analog_stick_model_parameter_l_block;
+        AnalogStickFactoryCalibrationLBlock analog_stick_factory_calibration_l_block;
+        AnalogStickModuleTypeRBlock analog_stick_module_type_r_block;
+        AnalogStickModelParameterRBlock analog_stick_model_parameter_r_block;
+        AnalogStickFactoryCalibrationRBlock analog_stick_factory_calibration_r_block;
         // ConsoleSixAxisSensorModuleTypeBlock console_six_axis_sensor_module_type_block;
         // ConsoleSixAxisSensorHorizontalOffsetBlock console_six_axis_sensor_horizontal_offset_block;
         // BatteryVersionBlock battery_version_block;
@@ -208,5 +209,11 @@ namespace ams::settings::impl {
     Result GetCalibBinAmiiboEcqvBlsKey(settings::factory::AmiiboEcqvBlsKey *out);
     Result GetCalibBinAmiiboEcqvBlsCertificate(settings::factory::AmiiboEcqvBlsCertificate *out);
     Result GetCalibBinAmiiboEcqvBlsRootCertificate(settings::factory::AmiiboEcqvBlsRootCertificate *out);
+    Result GetCalibBinAnalogStickModuleTypeL(u8 *out);
+    Result GetCalibBinAnalogStickModelParameterL(settings::factory::AnalogStickModelParameter *out);
+    Result GetCalibBinAnalogStickFactoryCalibrationL(settings::factory::AnalogStickFactoryCalibration *out);
+    Result GetCalibBinAnalogStickModuleTypeR(u8 *out);
+    Result GetCalibBinAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out);
+    Result GetCalibBinAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out);
 
 }
