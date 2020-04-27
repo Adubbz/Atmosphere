@@ -75,7 +75,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data) - (info->header.version < EncryptedKeyFormatVersion ? EncryptionKeyGenerationSize : 0));
-            std::memcpy(out->data, block.data, out->size); // fuck std::copy
+            std::memcpy(out->data, block.data, out->size);
             return ResultSuccess();
         }
 
@@ -94,7 +94,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
-            std::memcpy(out->cert, block.data, out->size); // fuck std::copy
+            std::memcpy(out->cert, block.data, out->size);
             return ResultSuccess();
         }
 
@@ -113,7 +113,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
-            std::memcpy(out->cert, block.data, out->size); // fuck std::copy
+            std::memcpy(out->cert, block.data, out->size);
             return ResultSuccess();
         }
 
@@ -132,7 +132,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data) - (info->header.version < EncryptedKeyFormatVersion ? EncryptionKeyGenerationSize : 0));
-            std::memcpy(out->data, block.data, out->size); // fuck std::copy
+            std::memcpy(out->data, block.data, out->size);
             return ResultSuccess();
         }
 
@@ -151,7 +151,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
-            std::memcpy(out->cert, block.data, out->size); // fuck std::copy
+            std::memcpy(out->cert, block.data, out->size);
             return ResultSuccess();
         }
 
@@ -170,7 +170,7 @@ namespace ams::settings::impl {
             
             /* Output the data. */
             out->size = static_cast<u32>(sizeof(block.data));
-            std::memcpy(out->cert, block.data, out->size); // fuck std::copy
+            std::memcpy(out->cert, block.data, out->size);
             return ResultSuccess();
         }
 

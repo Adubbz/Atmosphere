@@ -19,3 +19,4 @@
 #include "util/util_uuid_api.hpp"
 #include "util/util_compression.hpp"
 #include "util/util_ini.hpp"
+#include "util/util_math_types.hpp"
