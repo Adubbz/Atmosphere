@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,11 +14,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-#include <stratosphere.hpp>
+#include <vapours.hpp>
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out);
-    Result GetSerialNumber(settings::system::SerialNumber *out);
+    struct SpeakerParameter {
+        u8 value[0x5A];
+    };
+    static_assert(sizeof(SpeakerParameter) == 0x5A);
+    static_assert(std::is_pod<SpeakerParameter>::value);
+
+    Result GetSpeakerParameter(SpeakerParameter *out);
 
 }

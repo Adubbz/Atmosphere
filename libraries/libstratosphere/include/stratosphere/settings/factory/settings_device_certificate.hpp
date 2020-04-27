@@ -36,4 +36,8 @@ namespace ams::settings::factory {
     static_assert(sizeof(Rsa2048DeviceCertificate) == 0x240);
     static_assert(std::is_pod<Rsa2048DeviceCertificate>::value);
 
+    Result GetEciDeviceCertificate(EccB233DeviceCertificate *out);
+    Result GetEciDeviceCertificate(Rsa2048DeviceCertificate *out);
+    Result GetEticketDeviceCertificate(Rsa2048DeviceCertificate *out);
+
 }

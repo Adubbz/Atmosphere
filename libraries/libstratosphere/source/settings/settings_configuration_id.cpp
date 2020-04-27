@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,19 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "impl/settings_configuration_id_impl.hpp"
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
-        std::shared_ptr<IFactorySettingsServer> intf;
-        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
-    }
-
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    void GetConfigurationId1(ConfigurationId1 *out) {
+        R_ABORT_UNLESS(settings::impl::GetConfigurationId1(out));
     }
 
 }

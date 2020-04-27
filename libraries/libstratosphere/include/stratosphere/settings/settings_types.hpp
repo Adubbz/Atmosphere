@@ -220,4 +220,10 @@ namespace ams::settings {
         return !(lhs <= rhs);
     }
 
+    struct BatteryLot {
+        u8 value[0x18];
+    };
+    static_assert(sizeof(BatteryLot) == 0x18);
+    static_assert(std::is_pod<BatteryLot>::value);
+
 }

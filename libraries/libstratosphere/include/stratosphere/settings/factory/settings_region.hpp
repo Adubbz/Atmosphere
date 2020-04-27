@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,11 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-#include <stratosphere.hpp>
+#include <vapours.hpp>
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out);
-    Result GetSerialNumber(settings::system::SerialNumber *out);
+    struct RegionCode {
+        u32 value;
+    };
+    static_assert(sizeof(RegionCode) == 0x4);
+    static_assert(std::is_pod<RegionCode>::value);
 
 }

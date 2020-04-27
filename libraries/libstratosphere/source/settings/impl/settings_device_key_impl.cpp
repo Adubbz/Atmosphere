@@ -14,19 +14,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "settings_device_key_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
+    Result GetEciDeviceKey(settings::factory::EccB233DeviceKey *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+        return intf->GetEciDeviceKey(out);
     }
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    Result GetEciDeviceKey(settings::factory::Rsa2048DeviceKey *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetEciDeviceKey2(out);
+    }
+
+    Result GetEticketDeviceKey(settings::factory::Rsa2048DeviceKey *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetEticketDeviceKey(out);
     }
 
 }
+

@@ -19,33 +19,39 @@
 namespace ams::settings::impl {
 
     Result GetAmiiboKey(settings::factory::AmiiboKey *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboKey));
-        return ::setcalGetAmiiboKey(reinterpret_cast<::SetCalAmiiboKey *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboKey(out);
     }
 
     Result GetAmiiboEcqvCertificate(settings::factory::AmiiboEcqvCertificate *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboEcqvCertificate));
-        return ::setcalGetAmiiboEcqvCertificate(reinterpret_cast<::SetCalAmiiboEcqvCertificate *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboEcqvCertificate(out);
     }
 
     Result GetAmiiboEcdsaCertificate(settings::factory::AmiiboEcdsaCertificate *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboEcdsaCertificate));
-        return ::setcalGetAmiiboEcdsaCertificate(reinterpret_cast<::SetCalAmiiboEcdsaCertificate *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboEcdsaCertificate(out);
     }
 
     Result GetAmiiboEcqvBlsKey(settings::factory::AmiiboEcqvBlsKey *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboEcqvBlsKey));
-        return ::setcalGetAmiiboEcqvBlsKey(reinterpret_cast<::SetCalAmiiboEcqvBlsKey *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboEcqvBlsKey(out);
     }
 
     Result GetAmiiboEcqvBlsCertificate(settings::factory::AmiiboEcqvBlsCertificate *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboEcqvBlsCertificate));
-        return ::setcalGetAmiiboEcqvBlsCertificate(reinterpret_cast<::SetCalAmiiboEcqvBlsCertificate *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboEcqvBlsCertificate(out);
     }
 
     Result GetAmiiboEcqvBlsRootCertificate(settings::factory::AmiiboEcqvBlsRootCertificate *out) {
-        static_assert(sizeof(*out) == sizeof(::SetCalAmiiboEcqvBlsRootCertificate));
-        return ::setcalGetAmiiboEcqvBlsRootCertificate(reinterpret_cast<::SetCalAmiiboEcqvBlsRootCertificate *>(out));
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetAmiiboEcqvBlsRootCertificate(out);
     }
 
 }

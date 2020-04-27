@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,11 +14,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #pragma once
-#include <stratosphere.hpp>
+#include <vapours.hpp>
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out);
-    Result GetSerialNumber(settings::system::SerialNumber *out);
+    struct SslKey {
+        u32 size;
+        u8 data[0x134];
+    };
+    static_assert(sizeof(SslKey) == 0x138);
+    static_assert(std::is_pod<SslKey>::value);
+
+    struct SslCertificate {
+        u32 size;
+        u8 cert[0x800];
+    };
+    static_assert(sizeof(SslCertificate) == 0x804);
+    static_assert(std::is_pod<SslCertificate>::value);
+
+    Result GetSslKey(SslKey *out);
+    Result GetSslCertificate(SslCertificate *out);
 
 }

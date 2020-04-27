@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,19 +14,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "settings_ssl_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
+    Result GetSslKey(settings::factory::SslKey *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+        return intf->GetSslKey(out);
     }
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    Result GetSslCertificate(settings::factory::SslCertificate *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetSslCertificate(out);
     }
 
 }

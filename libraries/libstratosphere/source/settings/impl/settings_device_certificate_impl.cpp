@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,19 +14,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "settings_device_certificate_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
+    Result GetEciDeviceCertificate(settings::factory::EccB233DeviceCertificate *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+        return intf->GetEciDeviceCertificate(out);
     }
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    Result GetEciDeviceCertificate(settings::factory::Rsa2048DeviceCertificate *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetEciDeviceCertificate2(out);
+    }
+
+    Result GetEticketDeviceCertificate(settings::factory::Rsa2048DeviceCertificate *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetEticketDeviceCertificate(out);
     }
 
 }

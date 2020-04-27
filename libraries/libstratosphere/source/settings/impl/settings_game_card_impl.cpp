@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,19 +14,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "settings_game_card_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
+    Result GetGameCardKey(settings::factory::GameCardKey *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+        return intf->GetGameCardKey(out);
     }
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    Result GetGameCardCertificate(settings::factory::GameCardCertificate *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetGameCardCertificate(out);
     }
 
 }

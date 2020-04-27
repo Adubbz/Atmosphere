@@ -14,44 +14,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_analog_stick_impl.hpp"
+#include "settings_motion_sensor_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetAnalogStickModuleTypeL(u8 *out) {
+    Result GetAccelerometerOffset(settings::factory::AccelerometerOffset *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickModuleTypeL(out);
+        return intf->GetAccelerometerOffset(out);
     }
 
-    Result GetAnalogStickModelParameterL(settings::factory::AnalogStickModelParameter *out) {
+    Result GetAccelerometerScale(settings::factory::AccelerometerScale *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickModelParameterL(out);
+        return intf->GetAccelerometerScale(out);
     }
 
-    Result GetAnalogStickFactoryCalibrationL(settings::factory::AnalogStickFactoryCalibration *out) {
+    Result GetGyroscopeOffset(settings::factory::GyroscopeOffset *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickFactoryCalibrationL(out);
+        return intf->GetGyroscopeOffset(out);
     }
 
-    Result GetAnalogStickModuleTypeR(u8 *out) {
+    Result GetGyroscopeScale(settings::factory::GyroscopeScale *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickModuleTypeR(out);
+        return intf->GetGyroscopeScale(out);
     }
 
-    Result GetAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out) {
+    Result GetConsoleSixAxisSensorModuleType(u8 *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickModelParameterR(out);
+        return intf->GetConsoleSixAxisSensorModuleType(out);
     }
 
-    Result GetAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out) {
+    Result GetConsoleSixAxisSensorMountType(u8 *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetAnalogStickFactoryCalibrationR(out);
+        return intf->GetConsoleSixAxisSensorMountType(out);
+    }
+
+    Result GetConsoleSixAxisSensorHorizontalOffset(settings::factory::ConsoleSixAxisSensorHorizontalOffset *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetConsoleSixAxisSensorHorizontalOffset(out);
     }
 
 }

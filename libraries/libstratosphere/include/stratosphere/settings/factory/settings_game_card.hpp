@@ -13,20 +13,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#pragma once
+#include <vapours.hpp>
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
-        std::shared_ptr<IFactorySettingsServer> intf;
-        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
-    }
+    struct GameCardKey {
+        u32 size;
+        u8 data[0x134];
+    };
+    static_assert(sizeof(GameCardKey) == 0x138);
+    static_assert(std::is_pod<GameCardKey>::value);
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
-    }
+    struct GameCardCertificate {
+        u8 cert[0x400];
+    };
+    static_assert(sizeof(GameCardCertificate) == 0x400);
+    static_assert(std::is_pod<GameCardCertificate>::value);
+
+    Result GetGameCardKey(GameCardKey *out);
+    Result GetGameCardCertificate(GameCardCertificate *out);
 
 }

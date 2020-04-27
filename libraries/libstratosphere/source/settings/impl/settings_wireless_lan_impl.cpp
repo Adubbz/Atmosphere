@@ -14,19 +14,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "settings_wireless_lan_impl.hpp"
 
 namespace ams::settings::impl {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
+    Result GetWirelessLanMacAddress(settings::factory::MacAddress *out) {
         std::shared_ptr<IFactorySettingsServer> intf;
         R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+        return intf->GetWirelessLanMacAddress(out);
     }
 
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
+    Result GetWirelessLanCountryCodeCount(s32 *out) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetWirelessLanCountryCodeCount(out);
+    }
+
+    Result GetWirelessLanCountryCodes(s32 *out_count, settings::factory::CountryCode *out_codes, s32 num_codes) {
+        std::shared_ptr<IFactorySettingsServer> intf;
+        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
+        return intf->GetWirelessLanCountryCodes(out_count, sf::OutArray<settings::factory::CountryCode>(out_codes, num_codes));
     }
 
 }

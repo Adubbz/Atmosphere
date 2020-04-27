@@ -20,8 +20,7 @@ namespace ams::settings::factory {
 
     struct AmiiboKey {
         u32 size;
-        u8 key[0x50];
-        u32 generation;
+        u8 data[0x54];
     };
     static_assert(sizeof(AmiiboKey) == 0x58);
     static_assert(std::is_pod<AmiiboKey>::value);
@@ -42,8 +41,7 @@ namespace ams::settings::factory {
 
     struct AmiiboEcqvBlsKey {
         u32 size;
-        u8 key[0x40];
-        u32 generation;
+        u8 data[0x44];
     };
     static_assert(sizeof(AmiiboEcqvBlsKey) == 0x48);
     static_assert(std::is_pod<AmiiboEcqvBlsKey>::value);

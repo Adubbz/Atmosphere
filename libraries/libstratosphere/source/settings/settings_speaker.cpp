@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,19 +14,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "settings_serial_number_impl.hpp"
+#include "impl/settings_speaker_impl.hpp"
 
-namespace ams::settings::impl {
+namespace ams::settings::factory {
 
-    Result GetSerialNumber(settings::factory::SerialNumber *out) {
-        std::shared_ptr<IFactorySettingsServer> intf;
-        R_TRY(CreateFactorySettingsServerProxy(std::addressof(intf)));
-        return intf->GetSerialNumber(out);
+    Result GetSpeakerParameter(SpeakerParameter *out) {
+        /* Non calibration data errors represent fundamental system failure. */
+        R_TRY_CATCH(settings::impl::GetSpeakerParameter(out)) {
+            R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
+            R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
+        } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
+        return ResultSuccess();
     }
-
-    Result GetSerialNumber(settings::system::SerialNumber *out) {
-        static_assert(sizeof(*out) == sizeof(::SetSysSerialNumber));
-        return ::setsysGetSerialNumber(reinterpret_cast<::SetSysSerialNumber *>(out));
-    }
-
 }

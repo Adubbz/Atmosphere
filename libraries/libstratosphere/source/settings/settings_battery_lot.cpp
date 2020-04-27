@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Atmosphère-NX
+ * Copyright (c) 2018-2020 Adubbz, Atmosphère-NX
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -14,15 +14,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <stratosphere.hpp>
-#include "impl/settings_serial_number_impl.hpp"
+#include "impl/settings_battery_lot_impl.hpp"
 
 namespace ams::settings {
 
     namespace factory {
 
-        Result GetSerialNumber(SerialNumber *out) {
+        Result GetBatteryLot(BatteryLot *out) {
             /* Non calibration data errors represent fundamental system failure. */
-            R_TRY_CATCH(settings::impl::GetSerialNumber(out)) {
+            R_TRY_CATCH(settings::impl::GetBatteryLot(out)) {
+                R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
+                R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
+            } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
+            return ResultSuccess();
+        }
+
+        Result GetBatteryVersion(u8 *out) {
+            /* Non calibration data errors represent fundamental system failure. */
+            R_TRY_CATCH(settings::impl::GetBatteryVersion(out)) {
                 R_CATCH_RETHROW(settings::factory::ResultCalibrationDataFileSystemCorrupted)
                 R_CATCH_RETHROW(settings::factory::ResultCalibrationDataCrcError)
             } R_END_TRY_CATCH_WITH_ABORT_UNLESS;
@@ -33,9 +42,7 @@ namespace ams::settings {
 
     namespace system {
 
-        void GetSerialNumber(SerialNumber *out) {
-            R_ABORT_UNLESS(settings::impl::GetSerialNumber(out));
-        }
+        /* TODO: Result GetBatteryLot(BatteryLot *out); */
 
     }
 
