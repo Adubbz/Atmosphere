@@ -30,8 +30,8 @@ namespace ams::settings::impl {
         u8 pad[_BlockSize - sizeof(TypeSizeStruct) - sizeof(u16)];          \
         u16 crc;                                                            \
     };                                                                      \
-    static_assert(sizeof(_BlockTypeName) == _BlockSize);        
-    
+    static_assert(sizeof(_BlockTypeName) == _BlockSize);
+
     #define DEFINE_CALIBRATION_SHA_BLOCK(_BlockTypeName, _BlockSize, _Decl) \
     struct _BlockTypeName {                                                       \
         using TypeSizeStruct = struct PACKED { _Decl; };                                 \
@@ -42,7 +42,7 @@ namespace ams::settings::impl {
     static_assert(sizeof(_BlockTypeName) == _BlockSize);
 
     DEFINE_CALIBRATION_CRC_BLOCK(ConfigurationId1Block,                     0x20,   settings::factory::ConfigurationId1                        id)
-    DEFINE_CALIBRATION_CRC_BLOCK(WirelessLanCountryCodesBlock,              0x190,  u32 count; u32 reserved_04; settings::factory::CountryCode country_codes[130])
+    DEFINE_CALIBRATION_CRC_BLOCK(WirelessLanCountryCodesBlock,              0x190,  s32 count; u32 reserved_04; settings::factory::CountryCode country_codes[130])
     DEFINE_CALIBRATION_CRC_BLOCK(WirelessLanMacAddressBlock,                0x8,    settings::factory::MacAddress                              mac_address)
     DEFINE_CALIBRATION_CRC_BLOCK(BluetoothBdAddressBlock,                   0x8,    settings::factory::BdAddress                               bd_address)
     DEFINE_CALIBRATION_CRC_BLOCK(AccelerometerOffsetBlock,                  0x8,    settings::factory::AccelerometerOffset                     accelerometer_offset)
@@ -86,7 +86,7 @@ namespace ams::settings::impl {
     DEFINE_CALIBRATION_CRC_BLOCK(ExtendedGameCardKeyBlock,                  0x140,  u8                                                         data[0x130])
     DEFINE_CALIBRATION_CRC_BLOCK(LcdVendorIdBlock,                          0x10,   u32                                                        vendor_id)
     DEFINE_CALIBRATION_CRC_BLOCK(Rsa2048DeviceKeyBlock,                     0x250,  u8                                                         data[0x240])
-    DEFINE_CALIBRATION_CRC_BLOCK(Rsa2048DeviceCertificateBlock,             0x250,  u8                                                         data[0x240])
+    DEFINE_CALIBRATION_CRC_BLOCK(Rsa2048DeviceCertificateBlock,             0x250,  settings::factory::Rsa2048DeviceCertificate                certificate)
     DEFINE_CALIBRATION_CRC_BLOCK(UsbTypeCPowerSourceCircuitVersionBlock,    0x10,   u8                                                         version)
     DEFINE_CALIBRATION_CRC_BLOCK(HomeMenuSchemeSubColorBlock,               0x10,   util::Unorm8x4                                             color)
     DEFINE_CALIBRATION_CRC_BLOCK(HomeMenuSchemeBezelColorBlock,             0x10,   util::Unorm8x4                                             color)
@@ -152,8 +152,8 @@ namespace ams::settings::impl {
         RandomNumberBlock random_number_block;
         GameCardKeyBlock game_card_key_block;
         GameCardCertificateBlock game_card_certificate_block;
-        Rsa2048ETicketKeyBlock eticket_device_key_block;
-        Rsa2048ETicketCertificateBlock eticket_certificate_block;
+        Rsa2048ETicketKeyBlock rsa_2048_eticket_key_block;
+        Rsa2048ETicketCertificateBlock rsa_2048_eticket_certificate_block;
         BatteryLotBlock battery_lot_block;
         SpeakerParameterBlock speaker_parameter_block;
         RegionCodeBlock region_code_block;
@@ -173,8 +173,8 @@ namespace ams::settings::impl {
         ExtendedSslKeyBlock extended_ssl_key_block;
         ExtendedGameCardKeyBlock extended_game_card_key_block;
         LcdVendorIdBlock lcd_vendor_id_block;
-        Rsa2048DeviceKeyBlock eci_device_key_2_block;
-        Rsa2048DeviceCertificateBlock eci_device_certificate_2_block;
+        Rsa2048DeviceKeyBlock rsa_2048_device_key_block;
+        Rsa2048DeviceCertificateBlock rsa_2048_device_certificate_block;
         UsbTypeCPowerSourceCircuitVersionBlock usb_type_c_power_source_circuit_version_block;
         HomeMenuSchemeSubColorBlock home_menu_scheme_sub_color_block;
         HomeMenuSchemeBezelColorBlock home_menu_scheme_bezel_color_block;
@@ -220,5 +220,45 @@ namespace ams::settings::impl {
     Result GetCalibBinAnalogStickModuleTypeR(u8 *out);
     Result GetCalibBinAnalogStickModelParameterR(settings::factory::AnalogStickModelParameter *out);
     Result GetCalibBinAnalogStickFactoryCalibrationR(settings::factory::AnalogStickFactoryCalibration *out);
+    Result GetCalibBinBluetoothBdAddress(settings::factory::BdAddress *out);
+    Result GetCalibBinConfigurationId1(settings::factory::ConfigurationId1 *out);
+    Result GetCalibBinAccelerometerOffset(settings::factory::AccelerometerOffset *out);
+    Result GetCalibBinAccelerometerScale(settings::factory::AccelerometerScale *out);
+    Result GetCalibBinGyroscopeOffset(settings::factory::GyroscopeOffset *out);
+    Result GetCalibBinGyroscopeScale(settings::factory::GyroscopeScale *out);
+    Result GetCalibBinConsoleSixAxisSensorModuleType(u8 *out);
+    Result GetCalibBinConsoleSixAxisSensorMountType(u8 *out);
+    Result GetCalibBinConsoleSixAxisSensorHorizontalOffset(settings::factory::ConsoleSixAxisSensorHorizontalOffset *out);
+    Result GetCalibBinSerialNumber(settings::factory::SerialNumber *out);
+    Result GetCalibBinSerialNumberForSystemSettings(settings::system::SerialNumber *out);
+    Result GetCalibBinWirelessLanMacAddress(settings::factory::MacAddress *out);
+    Result GetCalibBinWirelessLanCountryCodeCount(s32 *out);
+    Result GetCalibBinWirelessLanCountryCodes(s32 *out_count, settings::factory::CountryCode * const out, size_t num_codes);
+    Result GetCalibBinBatteryLot(settings::BatteryLot *out);
+    Result GetCalibBinBatteryLotForSystemSettings(settings::BatteryLot *out);
+    Result GetCalibBinBatteryVersion(u8 *out);
+    Result GetCalibBinSpeakerParameter(settings::factory::SpeakerParameter *out);
+    Result GetCalibBinEccB233DeviceCertificate(settings::factory::EccB233DeviceCertificate *out);
+    Result GetCalibBinRsa2048DeviceCertificate(settings::factory::Rsa2048DeviceCertificate *out);
+    Result GetCalibBinRsa2048ETicketCertificate(settings::factory::Rsa2048DeviceCertificate *out);
+    Result GetCalibBinProductModelForSystemSettings(s32 *out);
+    Result GetCalibBinHomeMenuSchemeMainColorVariation(s32 *out);
+    Result GetCalibBinHomeMenuSchemeSubColor(util::Unorm8x4 *out);
+    Result GetCalibBinHomeMenuSchemeBezelColor(util::Unorm8x4 *out);
+    Result GetCalibBinHomeMenuSchemeMainColor1(util::Unorm8x4 *out);
+    Result GetCalibBinHomeMenuSchemeMainColor2(util::Unorm8x4 *out);
+    Result GetCalibBinHomeMenuSchemeMainColor3(util::Unorm8x4 *out);
+    Result GetCalibBinHomeMenuSchemeModel(u32 *out);
+    Result GetCalibBinSslKey(settings::factory::SslKey *out);
+    Result GetCalibBinSslCertificate(settings::factory::SslCertificate *out);
+    Result GetCalibBinGameCardKey(settings::factory::GameCardKey *out);
+    Result GetCalibBinGameCardCertificate(settings::factory::GameCardCertificate *out);
+    Result GetCalibBinEccB233DeviceKey(settings::factory::EccB233DeviceKey *out);
+    Result GetCalibBinRsa2048DeviceKey(settings::factory::Rsa2048DeviceKey *out);
+    Result GetCalibBinRsa2048ETicketKey(settings::factory::Rsa2048DeviceKey *out);
+    Result GetCalibBinBacklightBrightnessCoefficientsForInternal(util::Float3 *out);
+    Result GetCalibBinLcdVendorId(u32 *out);
+    Result GetCalibBinUsbTypeCPowerSourceCircuitVersion(u8 *out);
+    Result GetCalibBinRegionCode(settings::factory::RegionCode *out);
 
 }

@@ -19,7 +19,7 @@
 namespace ams::settings::factory {
 
     struct ConfigurationId1 {
-        u8 id[0x1E];
+        char id[0x1E];
     };
     static_assert(sizeof(ConfigurationId1) == 0x1E);
     static_assert(std::is_pod<ConfigurationId1>::value);
